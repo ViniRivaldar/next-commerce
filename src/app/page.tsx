@@ -1,4 +1,5 @@
 import { ProductType } from "@/types/ProductType";
+import Products from "./components/Products";
 
 async function getProdutcs(){
   const res = await fetch('https://fakestoreapi.com/products')
@@ -19,9 +20,9 @@ export default async function Home() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 xl:gap-6">
         {
           products.map((produto:ProductType)=>(
-            <div key={produto.id}>
-              {produto.title}
-            </div>
+            <Products key={produto.id} product={produto}>
+              
+            </Products>
           ))
         }
       </div>
