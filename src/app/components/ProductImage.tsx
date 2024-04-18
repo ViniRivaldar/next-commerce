@@ -16,24 +16,27 @@ export default function ProductImage({product,fill}:ProductImageProps ){
         <Image 
         src={product.image}
         fill
-        alt={product.title}
+        alt={product.name}
+        sizes="(max-width: 400px) 100vw, 400px"
+        priority
         className={`object-cover ${
             loading ? 'scale-100 blur-3xl grayscale':'scale-100 blur-0 grayscale-0'
         }`}
 
-        onLoadingComplete={()=>setLoading(false)}
+        onLoad={()=>setLoading(false)}
         />
     ):(
         <Image 
         src={product.image}
         width={400}
         height={700}
-        alt={product.title}
+        alt={product.name}
+        priority
         className={`object-cover ${
             loading ? 'scale-100 blur-3xl grayscale':'scale-100 blur-0 grayscale-0'
         }`}
 
-        onLoadingComplete={()=>setLoading(false)}
+        onLoad={()=>setLoading(false)}
         />
     )
 

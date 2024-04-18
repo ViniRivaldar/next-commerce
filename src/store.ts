@@ -14,6 +14,6 @@ export const useCartStore = create<CartState>()(
     persist((set)=>({
         cart: [],
         isOpen:false,
-        toggleCart: ()=> set((state)=>({isOpen: !state}))
+        toggleCart: ()=> set((state)=>({isOpen: !state.isOpen}))
     }),{name:'cart-storage'})
 )
