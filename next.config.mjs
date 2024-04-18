@@ -5,7 +5,7 @@ const nextConfig = {
         remotePatterns: [
             {
               protocol: 'https',
-              hostname: 'fakestoreapi.com',
+              hostname: 'files.stripe.com',
               port: '',
             },
           ],
