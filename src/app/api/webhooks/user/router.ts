@@ -3,6 +3,7 @@ import { IncomingHttpHeaders } from 'http'
 import { headers } from 'next/headers'
 import { NextResponse } from 'next/server'
 import {Webhook, WebhookRequiredHeaders} from 'svix'
+import Stripe from 'stripe'
 
 const WebhookSecret = process.env.CLERK_WEBHOOK_SECRET || ''
 
@@ -59,9 +60,30 @@ async function handler(request: Request){
                 primary_email_addresses_id,
                 ...attributes
             } = evt.data
+
+            const secretKey= process.env.STRIPE_SECRET_KEY
+
+            if (!secretKey) {
+                throw new Error('STRIPE_SECRET_KEY is not defined');
+            }
+            
+            const stripe = new Stripe(secretKey, {
+                apiVersion: '2024-04-10'
+            });
+
+            const customer = await stripe.customers.create({
+                name: `${first_name} ${last_name}`,
+                email: email_addresses ? email_addresses[0].email_address:''
+            })
+
+
             await prisma.user.upsert({
                 where:{externalId: id as string},
-                create:{externalId: id as string, attributes},
+                create:{
+                    externalId: id as string, 
+                    stripeCustomerId: customer.id, 
+                    attributes
+                },
                 update:{attributes}
             })
         }
