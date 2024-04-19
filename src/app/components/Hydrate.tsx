@@ -7,5 +7,5 @@ export default function Hydrate({children}:{children:ReactNode}){
         setIsMounted(true)
     },[])
 
-    return isMounted ? <>{children}</> : <span>carregando...</span>
+    return isMounted ? <>{children}</> : null
 }
